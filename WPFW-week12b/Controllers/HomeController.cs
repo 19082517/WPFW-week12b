@@ -5,17 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WPFW_week12b.Data;
 using WPFW_week12b.Models;
 
 namespace WPFW_week12b.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private MijnContext context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(MijnContext context)
         {
-            _logger = logger;
+            this.context = context;
         }
 
         public IActionResult Index()
