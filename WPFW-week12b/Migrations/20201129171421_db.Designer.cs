@@ -9,7 +9,7 @@ using WPFW_week12b.Data;
 namespace WPFW_week12b.Migrations
 {
     [DbContext(typeof(MijnContext))]
-    [Migration("20201124151417_db")]
+    [Migration("20201129171421_db")]
     partial class db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,37 +18,14 @@ namespace WPFW_week12b.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("WPFW_week12b.Models.Student", b =>
+            modelBuilder.Entity("WPFW_week12b.Models.Result", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Addres")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DateOfBirth")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("PhoneNumber")
-                        .HasMaxLength(14)
+                    b.Property<int>("Grade")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Place")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
 
                     b.Property<int?>("StudentId")
                         .HasColumnType("INTEGER");
@@ -57,7 +34,57 @@ namespace WPFW_week12b.Migrations
 
                     b.HasIndex("StudentId");
 
+                    b.ToTable("results");
+                });
+
+            modelBuilder.Entity("WPFW_week12b.Models.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Addres")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(14)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Place")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("age")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
                     b.ToTable("students");
+                });
+
+            modelBuilder.Entity("WPFW_week12b.Models.Result", b =>
+                {
+                    b.HasOne("WPFW_week12b.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("WPFW_week12b.Models.Student", b =>

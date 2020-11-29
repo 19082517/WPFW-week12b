@@ -10,14 +10,9 @@ using WPFW_week12b.Models;
 
 namespace WPFW_week12b.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private MijnContext context;
-
-        public HomeController(MijnContext context)
-        {
-            this.context = context;
-        }
+        public HomeController(MijnContext context) : base(context) { }
 
         public IActionResult Index()
         {

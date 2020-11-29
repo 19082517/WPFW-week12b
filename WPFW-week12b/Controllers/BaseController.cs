@@ -1,0 +1,31 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WPFW_week12b.Data;
+using WPFW_week12b.Models;
+
+namespace WPFW_week12b.Controllers
+{
+    public class BaseController : Controller
+    {
+        protected readonly MijnContext context;
+
+        public BaseController(MijnContext context)
+        {
+            this.context = context;
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext c)
+        {
+            var Top3OldestStudents = context.students.OrderByDescending(s => s.age).Take(3).ToList();
+            var Top3OrderedStudensByFirstName = context.students.OrderBy(s => s.FirstName).Take(3).ToList();
+            
+            ((BaseController)c.Controller).ViewData["OldestStudents"] = Top3OldestStudents;
+            ((BaseController)c.Controller).ViewData["OrderByFirstName"] = Top3OrderedStudensByFirstName;
+            base.OnActionExecuting(c);
+        }
+    }
+}

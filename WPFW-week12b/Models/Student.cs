@@ -14,9 +14,9 @@ namespace WPFW_week12b.Models
         public string LastName { get; set; }
         [MaxLength(14)]
         public string PhoneNumber { get; set; }
-        [Display(Name = "BirthDay")]
+        [Display(Name = "Age")]
         [Required]
-        public string DateOfBirth { get; set; }
+        public int age { get; set; }
         [StringLength(40)]
         public string Addres { get; set; }
         [StringLength(40)]

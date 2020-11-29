@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                @Html.DisplayNameFor(model => model.age)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Addres)
@@ -46,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                @Html.DisplayFor(modelItem => item.age)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Addres)
@@ -55,7 +55,6 @@
                 @Html.DisplayFor(modelItem => item.Place)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>

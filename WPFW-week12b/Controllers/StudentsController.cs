@@ -10,19 +10,14 @@ using WPFW_week12b.Models;
 
 namespace WPFW_week12b.Controllers
 {
-    public class StudentsController : Controller
+    public class StudentsController : BaseController
     {
-        private readonly MijnContext _context;
-
-        public StudentsController(MijnContext context)
-        {
-            _context = context;
-        }
+        public StudentsController(MijnContext context) : base(context) { }
 
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.students.ToListAsync());
+            return View(await context.students.ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -33,7 +28,7 @@ namespace WPFW_week12b.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students
+            var student = await context.students
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -54,12 +49,13 @@ namespace WPFW_week12b.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PhoneNumber,DateOfBirth,Addres,Place")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PhoneNumber,age,Addres,Place")] Student student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
+                student.Id = context.students.Count() + 1;
+                context.Add(student);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(student);
@@ -73,7 +69,7 @@ namespace WPFW_week12b.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students.FindAsync(id);
+            var student = await context.students.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -86,7 +82,7 @@ namespace WPFW_week12b.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PhoneNumber,DateOfBirth,Addres,Place")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PhoneNumber,age,Addres,Place")] Student student)
         {
             if (id != student.Id)
             {
@@ -97,8 +93,8 @@ namespace WPFW_week12b.Controllers
             {
                 try
                 {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
+                    context.Update(student);
+                    await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +120,7 @@ namespace WPFW_week12b.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students
+            var student = await context.students
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -139,15 +135,15 @@ namespace WPFW_week12b.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.students.FindAsync(id);
-            _context.students.Remove(student);
-            await _context.SaveChangesAsync();
+            var student = await context.students.FindAsync(id);
+            context.students.Remove(student);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
         {
-            return _context.students.Any(e => e.Id == id);
+            return context.students.Any(e => e.Id == id);
         }
     }
 }

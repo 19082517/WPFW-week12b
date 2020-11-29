@@ -1,22 +1,23 @@
 ﻿<div class="d-flex p-2">
     <div class="nav nav-pills nav-stacked mr-5">
         <a class="nav-link active" data-toggle="tab" href="#OldestStudents">Oudste studenten</a>
-        <a class="nav-link" data-toggle="tab" href="#NewestStudents">Nieuwste studenten</a>
-        <a class="nav-link" data-toggle="tab" href="#BestAverages">Beste gemiddelde</a>
+        <a class="nav-link" data-toggle="tab" href="#OrderByFirstName">Voornaam op volgorde</a>
     </div>
 
     <div class="tab-content">
         <div id="OldestStudents" class="tab-pane fade show active">
             <h3>Oudste studenten</h3>
-            <p>...</p>
+            @foreach (var student in (List<Student>)ViewData["OldestStudents"]) 
+            {
+                <div>@student.FirstName is @student.age jaar oud</div>
+            }
         </div>
-        <div id="NewestStudents" class="tab-pane fade">
-            <h3>Nieuwste studenten</h3>
-            <p>...</p>
-        </div>
-        <div id="BestAverages" class="tab-pane fade">
-            <h3>Beste gemiddelde</h3>
-            <p>...</p>
+        <div id="OrderByFirstName" class="tab-pane fade">
+            <h3>Voornaam op volgorde</h3>
+            @foreach (var student in (List<Student>)ViewData["OrderByFirstName"])
+            {
+                <div>@student.FirstName @student.LastName</div>
+            }
         </div>
     </div>
 </div>
