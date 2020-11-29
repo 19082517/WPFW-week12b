@@ -19,13 +19,9 @@ namespace WPFW_week12b.Controllers
         }
 
         public override void OnActionExecuting(ActionExecutingContext c)
-        {
-            var Top3OldestStudents = context.students.OrderByDescending(s => s.age).Take(3).ToList();
-            var Top3OrderedStudensByFirstName = context.students.OrderBy(s => s.FirstName).Take(3).ToList();
-            
-            ((BaseController)c.Controller).ViewData["OldestStudents"] = Top3OldestStudents;
-            ((BaseController)c.Controller).ViewData["OrderByFirstName"] = Top3OrderedStudensByFirstName;
-            base.OnActionExecuting(c);
+        {   
+            ((BaseController)c.Controller).ViewData["OldestStudents"] = context.students.OrderByDescending(s => s.age).Take(3).ToList();
+            ((BaseController)c.Controller).ViewData["OrderByFirstName"] = context.students.OrderBy(s => s.FirstName).Take(3).ToList();
         }
     }
 }
